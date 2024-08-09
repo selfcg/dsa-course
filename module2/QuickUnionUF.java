@@ -2,6 +2,7 @@
 
 public class QuickUnionUF {
 	private int[] id; // holds all ID's 
+	private int[] sz; //holds size of id[i] at sz[i]
 	
 	//Constructor, set id of each object(?) to itself 
 	public QuickUnionUF(int N) {
@@ -18,8 +19,10 @@ public class QuickUnionUF {
 	public void union(int p, int q) {
 		int i = getRoot(p);
 		int j = getRoot(q);
-		id[i] = j;
-		System.out.println("Created union between " + p + " and " + q);
+
+		if (i == j) return;
+		if (sz[i] < sz[j]) { id[i]  = j; sz[j] += sz[i]; }
+		else 							 { id[j]  = i; sz[i] += sz[j]; }			
 	}
 
 	public boolean connected(int p, int q){
@@ -33,3 +36,5 @@ public class QuickUnionUF {
 	}
 
 }
+
+//no need to create root data stucture as it is just a single value
